@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090611">
+  <meta name="description" content="A cinematic interactive birthday surprise.">
+  <title>A Birthday Surprise ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="particleCanvas" aria-hidden="true"></canvas>
+    <canvas id="fireworksCanvas" aria-hidden="true"></canvas>
+
+    <main id="experience" aria-live="polite">
+      <section id="opening" class="scene active" aria-labelledby="openingTitle">
+        <div class="scene-vignette"></div>
+        <div class="scene-particle-glow glow-opening" aria-hidden="true"></div>
+        <div class="opening-orb" aria-hidden="true"></div>
+        <div class="opening-content">
+          <div class="eyebrow">A little magic, made just for you</div>
+          <h1 id="openingTitle" class="hero-title">✨ A Surprise Awaits ✨</h1>
+          <p class="hero-copy">Take a breath. Tap the light. Let the evening begin.</p>
+          <button id="openSurpriseBtn" class="magic-button primary" type="button">
+            <span class="button-spark">✦</span><span>Open Surprise</span><span class="button-spark">✦</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="cakeScene" class="scene" aria-labelledby="cakeTitle" hidden>
+        <div class="scene-vignette"></div>
+        <div class="scene-particle-glow glow-cake" aria-hidden="true"></div>
+        <div class="scene-content center-stack">
+          <div id="cakeTitle" class="eyebrow">A wish is waiting...</div>
+          <div class="cake-wrap" id="cakeWrap">
+            <div class="cake-glow" aria-hidden="true"></div>
+            <div class="cake" aria-label="Birthday cake with candles">
+              <div class="cake-top"></div>
+              <div class="cake-layer layer-one"></div>
+              <div class="cake-layer layer-two"></div>
+              <div class="cake-layer layer-three"></div>
+              <div class="icing icing-one"></div>
+              <div class="icing icing-two"></div>
+              <div class="sprinkle s1"></div><div class="sprinkle s2"></div><div class="sprinkle s3"></div>
+              <div class="candles" id="candles">
+                <div class="candle"><span class="flame"></span></div>
+                <div class="candle"><span class="flame"></span></div>
+                <div class="candle"><span class="flame"></span></div>
+                <div class="candle"><span class="flame"></span></div>
+                <div class="candle"><span class="flame"></span></div>
+              </div>
+            </div>
+          </div>
+          <h2 class="scene-title">Make a wish, <span data-sister-name>My Amazing Sister</span> ✨</h2>
+          <p class="scene-copy" id="blowHint">Blow out the candles with your microphone.</p>
+          <div class="button-row">
+            <button id="startMicBtn" class="magic-button secondary" type="button">🎤 Enable Microphone</button>
+            <button id="holdBlowBtn" class="magic-button ghost" type="button" aria-pressed="false">Hold to Blow</button>
+            <button id="manualBlowBtn" class="magic-button primary" type="button">Blow Out Candles</button>
+          </div>
+          <p class="microphone-status" id="micStatus" role="status">Microphone is optional — the button always works.</p>
+        </div>
+      </section>
+
+      <section id="celebration" class="scene" aria-labelledby="birthdayTitle" hidden>
+        <div class="celebration-haze"></div>
+        <div class="scene-particle-glow glow-celebration" aria-hidden="true"></div>
+        <div class="scene-content center-stack celebration-content">
+          <div class="eyebrow celebration-eyebrow">Tonight is yours</div>
+          <h2 id="birthdayTitle" class="birthday-heading"><span>HAPPY</span><span>BIRTHDAY</span></h2>
+          <div class="birthday-name"><span data-sister-name>My Amazing Sister</span> <span>❤️</span></div>
+          <p class="scene-copy">May the next chapter be full of light, laughter and beautiful surprises.</p>
+        </div>
+      </section>
+
+      <section id="giftScene" class="scene" aria-labelledby="giftTitle" hidden>
+        <div class="scene-particle-glow glow-gift" aria-hidden="true"></div>
+        <div class="scene-content center-stack">
+          <div class="eyebrow">One more little thing...</div>
+          <h2 id="giftTitle" class="scene-title">Wait... there’s something else for you. 🎁</h2>
+          <button id="giftBox" class="gift-box" type="button" aria-label="Open the glowing gift box">
+            <span class="gift-halo" aria-hidden="true"></span>
+            <span class="gift-lid"></span><span class="gift-body"></span>
+            <span class="gift-ribbon ribbon-v"></span><span class="gift-ribbon ribbon-h"></span>
+            <span class="gift-glow-core">✦</span>
+          </button>
+          <p class="scene-copy">There are ten tiny surprises inside.</p>
+        </div>
+      </section>
+
+      <section id="surpriseScene" class="scene" aria-labelledby="surpriseTitle" hidden>
+        <div class="scene-particle-glow glow-surprise" aria-hidden="true"></div>
+        <div class="scene-content surprise-layout">
+          <header class="surprise-header">
+            <div class="eyebrow" id="surpriseCounter">01 / 10</div>
+            <button id="surpriseMuteHint" class="mini-button" type="button" hidden>Audio</button>
+          </header>
+          <div class="memory-stage" id="memoryStage">
+            <div class="media-shell" id="mediaShell">
+              <div class="media-glow" aria-hidden="true"></div>
+              <img id="surpriseImage" alt="" hidden>
+              <video id="surpriseVideo" muted playsinline preload="metadata" hidden></video>
+              <div id="mediaPlaceholder" class="media-placeholder" role="img" aria-label="Placeholder memory image">
+                <div class="placeholder-icon">✦</div>
+                <div class="placeholder-kicker"></div>
+                <div class="placeholder-number" id="placeholderNumber">01</div>
+                <div class="placeholder-note"><code></code>.</div>
+              </div>
+            </div>
+            <div class="memory-caption">
+              <div class="memory-dots" id="memoryDots" aria-hidden="true"></div>
+              <h2 id="surpriseTitle" class="scene-title">A little memory just for you ❤️</h2>
+              <p id="surpriseMessage" class="scene-copy">A little memory just for you ❤️</p>
+            </div>
+          </div>
+          <footer class="surprise-footer">
+            <button id="nextSurpriseBtn" class="magic-button primary" type="button">✨ Open Next Surprise →</button>
+          </footer>
+        </div>
+      </section>
+
+      <section id="finalScene" class="scene" aria-labelledby="finalTitle" hidden>
+        <div class="scene-particle-glow glow-final" aria-hidden="true"></div>
+        <div class="scene-content center-stack final-content">
+          <div class="eyebrow">And this is the end... for now</div>
+          <div class="final-heart" aria-hidden="true">❤️</div>
+          <h2 id="finalTitle" class="final-heading">Happy Birthday,<br><span data-sister-name>My Amazing Sister</span> ❤️</h2>
+          <p class="final-copy">Some surprises end. The memories they create don't.</p>
+          <p class="final-signoff">Made with love,<br><strong>Your Brother</strong></p>
+          <button id="replayBtn" class="magic-button primary" type="button">Experience It Again ↻</button>
+        </div>
+      </section>
+
+      <section id="letterScene" class="scene" aria-labelledby="letterTitle" hidden>
+        <div class="scene-particle-glow glow-letter" aria-hidden="true"></div>
+        <div class="scene-content center-stack letter-layout">
+          <div class="eyebrow">One last thing...</div>
+          <h2 id="letterTitle" class="scene-title">A little letter for you ❤️</h2>
+          <button id="envelope" class="envelope" type="button" aria-label="Open the birthday letter">
+            <span class="envelope-back"></span><span class="envelope-paper"></span><span class="envelope-flap"></span><span class="envelope-front"></span>
+            <span class="envelope-seal">❤</span>
+          </button>
+          <p class="scene-copy">Open it when you’re ready.</p>
+        </div>
+        <div class="letter-modal" id="letterModal" hidden>
+          <div class="letter-backdrop"></div>
+          <article class="letter-card" role="dialog" aria-modal="true" aria-labelledby="letterCardTitle">
+            <button id="letterCloseBtn" class="close-button" type="button" aria-label="Close letter">×</button>
+            <div class="letter-mark">✦</div>
+            <h2 id="letterCardTitle">For <span data-sister-name>My Amazing Sister</span> ❤️</h2>
+            <div id="letterBody" class="letter-body"></div>
+            <div class="letter-signoff" id="letterSignoff"></div>
+            <button id="finishLetterBtn" class="magic-button primary letter-finish" type="button">Finish My Letter ❤️</button>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <button id="muteBtn" class="audio-toggle" type="button" aria-label="Mute audio" aria-pressed="false">🔊</button>
+    <div id="srAnnouncer" class="sr-only" aria-live="polite"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/accessibility.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/fireworks.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/cake.js"></script>
+  <script src="js/surprises.js"></script>
+  <script src="js/letter.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
